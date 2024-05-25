@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+"""Main module for the API"""
 from flask import Flask
 from flask import Blueprint
 from models import storage
