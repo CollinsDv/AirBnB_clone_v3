@@ -16,7 +16,7 @@ def cities(state_id):
     return jsonify([city.to_dict() for city in state.cities])
 
 
-@app_views.route('/api/v1/cities/<city_id>',
+@app_views.route('/cities/<city_id>',
                  methods=['GET'], strict_slashes=False)
 def city_object(city_id):
     city = storage.get(City, city_id)
@@ -25,7 +25,7 @@ def city_object(city_id):
     return jsonify(city.to_dict())
 
 
-@app_views.route('/api/v1/cities/<city_id>',
+@app_views.route('/cities/<city_id>',
                  methods=['DELETE'], strict_slashes=False)
 def city_delete(city_id):
     city = storage.get(City, city_id)
@@ -36,7 +36,7 @@ def city_delete(city_id):
     return jsonify({}), 200
 
 
-@app_views.route('/api/v1/states/<state_id>/cities',
+@app_views.route('/states/<state_id>/cities',
                  methods=['POST'], strict_slashes=False)
 def city_create(state_id):
     data = request.get_json()
@@ -54,7 +54,7 @@ def city_create(state_id):
     return jsonify(city.to_dict()), 201
 
 
-@app_views.route('/api/v1/cities/<city_id>',
+@app_views.route('/cities/<city_id>',
                  methods=['PUT'], strict_slashes=False)
 def city_update(city_id):
     data = request.get_json()
