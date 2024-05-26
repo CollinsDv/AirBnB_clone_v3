@@ -20,10 +20,9 @@ def cities(state_id):
                  methods=['GET'], strict_slashes=False)
 def city_object(city_id):
     city = storage.get(City, city_id)
-    return city
-    # if city is None:
-    #     abort(404)
-    # return jsonify(city.to_dict())
+    if city is None:
+        abort(404)
+    return jsonify(city.to_dict())
 
 
 @app_views.route('/api/v1/cities/<city_id>',
