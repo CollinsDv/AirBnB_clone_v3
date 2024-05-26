@@ -56,7 +56,7 @@ def place_create(city_id):
 
 @app_views.route('/places/<place_id>',
                  methods=['PUT'], strict_slashes=False)
-def city_update(place_id):
+def place_update(place_id):
     data = request.get_json()
     if not data:
         abort(400, description="Not a JSON")
