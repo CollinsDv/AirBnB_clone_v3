@@ -41,12 +41,12 @@ def city_delete(city_id):
 def city_create(state_id):
     data = request.get_json()
     if not data:
-        abort(400, "Not a JSON")
+        abort(400, description="Not a JSON")
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
     if 'name' not in data:
-        abort(400, "Missing name")
+        abort(400, description="Missing name")
     city = City(**data)
     city.state_id = state_id
     storage.new(city)
@@ -59,7 +59,7 @@ def city_create(state_id):
 def city_update(city_id):
     data = request.get_json()
     if not data:
-        abort(400, "Not a JSON")
+        abort(400, description="Not a JSON")
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
