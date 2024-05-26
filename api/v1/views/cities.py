@@ -19,9 +19,9 @@ def cities(state_id):
 @app_views.route('/api/v1/cities/<city_id>',
                  methods=['GET'], strict_slashes=False)
 def city_object(city_id):
-    print(f"Getting city with ID: {city_id}")  # Print the city_id we're trying to get
     city = storage.get(City, city_id)
-    print(f"Got city: {city}")
+    if city is None:
+        abort(404)
     return jsonify(city.to_dict())
 
 
