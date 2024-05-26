@@ -15,8 +15,8 @@ def amenities():
 
 @app_views.route('/amenities/<amenity_id>',
                  methods=['GET'], strict_slashes=False)
-def amenity_object(city_id):
-    amenity = storage.get(Amenity, city_id)
+def amenity_object(amenity_id):
+    amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
     return jsonify(amenity.to_dict())
