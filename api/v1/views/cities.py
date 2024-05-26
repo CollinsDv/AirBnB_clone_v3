@@ -63,6 +63,8 @@ def city_update(city_id):
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
-    city = City(**data)
+    for key, value in data.items():
+        if key not in ['id', 'state_id', 'created_at', 'updated_at']:
+            setattr(city, key, value)
     storage.save()
     return jsonify(city.to_dict()), 200
