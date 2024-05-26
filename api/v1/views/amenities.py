@@ -22,6 +22,17 @@ def amenity_object(amenity_id):
     return jsonify(amenity.to_dict())
 
 
+@app_views.route('/amenities/<amenity_id>',
+                 methods=['DELETE'], strict_slashes=False)
+def amenity_delete(amenity_id):
+    amenity = storage.get(Amenity, amenity_id)
+    if amenity is None:
+        abort(404)
+    storage.delete(amenity)
+    storage.save()
+    return jsonify({}), 200
+
+
 @app_views.route('/amenities',
                  methods=['POST'], strict_slashes=False)
 def amenity_create():
