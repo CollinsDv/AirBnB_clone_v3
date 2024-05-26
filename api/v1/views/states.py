@@ -5,6 +5,7 @@ from models import storage
 from models.state import State
 from flask import jsonify, make_response, abort, request
 
+
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
     """Retrieves a state objects"""
@@ -21,7 +22,8 @@ def get_state_id(state_id):
     abort(404)
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>',
+                 methods=['DELETE'], strict_slashes=False)
 def delete_state(state_id):
     """deletes a state with state_id"""
     obj = storage.get(State, state_id)
@@ -40,11 +42,11 @@ def add_state():
         abort(400, description='Not a JSON')
     if 'name' not in request_data:
         abort(400, description='Missing name')
-    
+
     new_state = State(**request_data)
     storage.new(new_state)
     storage.save()
-    
+
     response = jsonify(new_state.to_dict())
     response.status_code = 201
     return response
@@ -59,7 +61,7 @@ def update_state(state_id):
     request_data = request.get_json()
     if not request_data:
         abort(400, description="Not a JSON")
-    
+
     for key, value in request_data.items():
         if key not in ['id', 'created_at', 'updated_at']:
             # state_obj.__dict__[key] = value
@@ -78,4 +80,5 @@ def handle_err_404(error):
 @app_views.errorhandler(400)
 def handle_err_400(error):
     """handle 400 error"""
-    return make_response(jsonify({"error": error.description}), 400)
+    return make_response(jsonify(
+                                 {"error": error.description}), 400)
