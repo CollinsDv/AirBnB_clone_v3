@@ -3,15 +3,15 @@
 from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models import storage
-from models.state import State
 from models.city import City
 from models.place import Place
+from models.user import User
 
-@app_views.route('/api/v1/cities/<city_id>/places',
+@app_views.route('/cities/<city_id>/places',
                  methods=['GET'], strict_slashes=False)
 def places(city_id):
     city = storage.get(City, city_id)
-    if place is None:
+    if city is None:
         abort(404)
     return jsonify([place.to_dict() for place in city.places])
 
@@ -28,7 +28,7 @@ def place_object(place_id):
 @app_views.route('/places/<place_id>',
                  methods=['DELETE'], strict_slashes=False)
 def place_delete(place_id):
-    place = storage.get(Place, city_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
     storage.delete(place)
@@ -45,10 +45,16 @@ def place_create(city_id):
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
+    if 'user_id' not in data:
+        abort(400, description="Missing user_id")
+    user = storage.get(User, data['user_id'])
+    if user is None:
+        abort(404)
     if 'name' not in data:
         abort(400, description="Missing name")
     place = Place(**data)
     place.city_id = city_id
+    place.user_id = user.id
     storage.new(place)
     storage.save()
     return jsonify(place.to_dict()), 201
