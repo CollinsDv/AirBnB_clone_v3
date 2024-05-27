@@ -45,8 +45,6 @@ def review_create(place_id):
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
-    if 'place_id' not in data:
-        abort(400, description="Missing place_id")
     user = storage.get(User, data['user_id'])
     if user is None:
         abort(404)
