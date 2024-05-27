@@ -11,7 +11,7 @@ from models.user import User
                  methods=['GET'], strict_slashes=False)
 def places(city_id):
     city = storage.get(City, city_id)
-    if place is None:
+    if city is None:
         abort(404)
     return jsonify([place.to_dict() for place in city.places])
 
