@@ -79,7 +79,7 @@ class DBStorage:
         """retrieve an object based on id
 
         Args:
-            cls(str) - class name
+            cls (obj) - class object
             id (str) - class id
 
         Return:
