@@ -54,6 +54,7 @@ def place_create(city_id):
         abort(400, description="Missing name")
     place = Place(**data)
     place.city_id = city_id
+    place.user_id = user.id
     storage.new(place)
     storage.save()
     return jsonify(place.to_dict()), 201
