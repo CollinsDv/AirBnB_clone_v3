@@ -73,23 +73,23 @@ class FileStorage:
         """retrieves one object
 
         Args:
-            cls - class
+            cls (obj)- class object
             id (str) - string id
         """
-        key = cls + '.' + id
         if cls and id:
+            key = cls.__class__.__name__ + '.' + id
             if self.__objects[key]:
-                return self.__objects[key].to_dict()
+                return self.__objects[key]
             return None
 
     def count(self, cls=None):
         """count number of objects in storage of a class
 
         Args:
-            cls (str) - class
+            cls (obj) - class
 
         Return:
-            interger count of cls object else every objs in storage
+            integer count of cls object else every objs in storage
         """
         if cls:
             objs = self.all(cls)
